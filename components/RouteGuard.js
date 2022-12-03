@@ -9,17 +9,17 @@ import { getFavourites, getHistory } from "../lib/UserData";
 
 
 export default function RouteGuard(props) {
-
+  const [searchHistory, setSearchHistory] = useAtom(searchHistoryAtom);
+  const [favouritesList, setFavouritesList] = useAtom(favouritesAtom);
   async function updateAtoms() {
-    favouritesAtom(await getFavourites());
-    searchHistoryAtom(await getHistory());
+    setFavouritesList(await getFavourites());
+    setSearchHistory(await getHistory());
   }
 
   const router = useRouter();
 
   const [authorized, setAuthorized] = useState(false)
-  const [searchHistory, setSearchHistory] = useAtom(searchHistoryAtom);
-  const [favouritesList, setFavouritesList] = useAtom(favouritesAtom);
+
 
   function authCheck(url) {
     const path = url.split('?')[0];
